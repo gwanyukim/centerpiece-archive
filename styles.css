@@ -536,7 +536,8 @@ body {
   margin-top: 10px;
 }
 
-.admin-auth input[type='email'] {
+.admin-auth input[type='email'],
+.admin-auth input[type='password'] {
   min-width: 260px;
   border: 1px solid var(--line);
   padding: 8px 10px;

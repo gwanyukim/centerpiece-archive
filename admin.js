@@ -8,8 +8,10 @@
   const savedPanel = document.getElementById('saved-panel');
   const form = document.getElementById('item-form');
   const sendLoginBtn = document.getElementById('send-login-link');
+  const loginWithPasswordBtn = document.getElementById('login-with-password');
   const logoutBtn = document.getElementById('logout');
   const loginEmailInput = document.getElementById('login-email');
+  const loginPasswordInput = document.getElementById('login-password');
   const addDetailBtn = document.getElementById('add-detail-row');
   const newItemBtn = document.getElementById('new-item');
 
@@ -382,6 +384,32 @@
     } catch (error) {
       setAuthStatus(`로그인 링크 발송 실패: ${error.message || '오류'}`);
     }
+  });
+
+  loginWithPasswordBtn.addEventListener('click', async function () {
+    if (!supabase) {
+      setAuthStatus('Supabase 연결 실패');
+      return;
+    }
+
+    const email = (loginEmailInput.value || '').trim();
+    const password = (loginPasswordInput.value || '').trim();
+
+    if (!email || !password) {
+      setAuthStatus('이메일과 비밀번호를 입력하세요.');
+      return;
+    }
+
+    setAuthStatus('로그인 중...');
+
+    const result = await supabase.auth.signInWithPassword({ email, password });
+    if (result.error) {
+      setAuthStatus(`로그인 실패: ${result.error.message}`);
+      return;
+    }
+
+    setAuthStatus('로그인 성공');
+    await refreshUIBySession();
   });
 
   logoutBtn.addEventListener('click', async function () {
