@@ -23,11 +23,13 @@
       <section class="admin-panel admin-auth" id="auth-panel">
         <h2>Admin Login</h2>
         <p class="step-help">등록한 관리자 이메일로 로그인 링크를 받습니다.</p>
-        <div class="admin-actions">
+        <div id="auth-login-controls" class="admin-actions">
           <input id="login-email" type="email" placeholder="admin@email.com" />
           <input id="login-password" type="password" placeholder="관리자 비밀번호" />
           <button id="login-with-password" class="admin-button admin-button-strong" type="button">Login</button>
           <button id="send-login-link" class="admin-button admin-button-strong" type="button">Send Login Link</button>
+        </div>
+        <div id="auth-loggedin-controls" class="admin-actions" style="display:none;">
           <button id="logout" class="admin-button" type="button">Logout</button>
         </div>
         <p id="auth-status" class="admin-status"></p>

@@ -12,6 +12,8 @@
   const logoutBtn = document.getElementById('logout');
   const loginEmailInput = document.getElementById('login-email');
   const loginPasswordInput = document.getElementById('login-password');
+  const authLoginControls = document.getElementById('auth-login-controls');
+  const authLoggedinControls = document.getElementById('auth-loggedin-controls');
   const addDetailBtn = document.getElementById('add-detail-row');
   const newItemBtn = document.getElementById('new-item');
 
@@ -375,6 +377,8 @@
     editorPanel.style.display = loggedIn ? '' : 'none';
     savedPanel.style.display = loggedIn ? '' : 'none';
     setEditorEnabled(loggedIn);
+    if (authLoginControls) authLoginControls.style.display = loggedIn ? 'none' : '';
+    if (authLoggedinControls) authLoggedinControls.style.display = loggedIn ? '' : 'none';
 
     if (!loggedIn) {
       setAuthStatus('로그인이 필요합니다.');
