@@ -107,9 +107,17 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      if (!window.supabase) {
+        const fallback = document.createElement('script');
+        fallback.src = 'https://unpkg.com/@supabase/supabase-js@2';
+        document.head.appendChild(fallback);
+      }
+    </script>
     <script src="./data.js"></script>
     <script>
-      const supabase = createSupabaseClient();
+      const supabase =
+        typeof createSupabaseClient === 'function' ? createSupabaseClient() : null;
       const authStatusEl = document.getElementById('auth-status');
       const statusEl = document.getElementById('admin-status');
       const listEl = document.getElementById('item-list');
@@ -398,7 +406,9 @@
         if (!supabase) {
           editorPanel.style.display = 'none';
           savedPanel.style.display = 'none';
-          setAuthStatus('Supabase 연결 실패: 페이지를 새로고침하거나 네트워크를 확인하세요.');
+          setAuthStatus(
+            'Supabase 스크립트 로딩 실패: 브라우저 추적차단/확장프로그램을 끄고 새로고침하세요.'
+          );
           return;
         }
 
