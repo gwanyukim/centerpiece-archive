@@ -54,11 +54,14 @@ body {
   font-size: 0.84rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  display: block;
 }
 
 .site-tagline .ko {
   font-size: 0.82rem;
   letter-spacing: 0.01em;
+  display: block;
+  margin-top: 6px;
 }
 
 .manage-link {
@@ -183,18 +186,19 @@ body {
 
 .back-link {
   display: inline-block;
-  margin-bottom: 28px;
+  margin-bottom: 0;
   color: var(--muted);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   font-size: 0.84rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  position: sticky;
-  top: 12px;
-  z-index: 20;
+  position: fixed;
+  top: 14px;
+  left: max(16px, calc((100vw - 1260px) / 2 + 24px));
+  z-index: 50;
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px);
   padding: 8px 10px;
   border: 1px solid var(--line);
 }
@@ -224,8 +228,9 @@ body {
 .detail-info h1 {
   margin: 6px 0 16px;
   font-size: clamp(1.4rem, 2.1vw, 2rem);
-  font-family: 'Fraunces', serif;
-  font-weight: 500;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .detail-meta {
@@ -359,6 +364,10 @@ body {
     grid-template-columns: 1fr;
   }
 
+  .back-link {
+    left: 16px;
+  }
+
   .detail-info {
     position: static;
     top: auto;
@@ -415,6 +424,13 @@ body {
 
   .item-page {
     padding: 20px 16px 40px;
+  }
+
+  .back-link {
+    top: 10px;
+    left: 10px;
+    font-size: 0.78rem;
+    padding: 6px 8px;
   }
 
   .main-contact-wrap {
