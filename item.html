@@ -64,10 +64,25 @@
           <a class="back-link" href="./index.html">← Gallery</a>
           <article class="detail-layout">
             <section class="detail-info">
-              <p class="detail-meta">${item.brand} · ${item.era}</p>
-              <h1>${item.name}</h1>
-              <div class="detail-copy">
-                <p id="detail-intro" class="detail-intro">${item.description}</p>
+              <div class="detail-info-grid">
+                <div class="detail-row">
+                  <p class="detail-key">브랜드</p>
+                  <p class="detail-value">${item.brand}</p>
+                </div>
+                <div class="detail-row detail-row-name">
+                  <p class="detail-key">제품명</p>
+                  <h1 class="detail-name">${item.name}</h1>
+                </div>
+                <div class="detail-row">
+                  <p class="detail-key">연대</p>
+                  <p class="detail-value">${item.era}</p>
+                </div>
+                <div class="detail-row detail-row-copy">
+                  <p class="detail-key">정보</p>
+                  <div class="detail-copy">
+                    <p id="detail-intro" class="detail-intro">${item.description}</p>
+                  </div>
+                </div>
               </div>
             </section>
             <section class="detail-images">${detailMedia}</section>
