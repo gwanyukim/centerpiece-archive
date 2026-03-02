@@ -25,10 +25,10 @@
         <p class="step-help">등록한 관리자 이메일로 로그인 링크를 받습니다.</p>
         <div class="admin-actions">
           <input id="login-email" type="email" placeholder="admin@email.com" />
-          <button id="send-login-link" class="admin-button admin-button-strong" type="button">Send Login Link</button>
+          <button id="send-login-link" class="admin-button admin-button-strong" type="button" onclick="document.getElementById('auth-status').textContent='버튼 클릭됨: 로그인 요청 준비 중...';">Send Login Link</button>
           <button id="logout" class="admin-button" type="button">Logout</button>
         </div>
-        <p id="auth-status" class="admin-status"></p>
+        <p id="auth-status" class="admin-status">초기 상태: 페이지 로딩 중...</p>
       </section>
 
       <section class="admin-guide admin-panel">
@@ -116,6 +116,13 @@
     </script>
     <script src="./data.js"></script>
     <script>
+      window.addEventListener('error', (event) => {
+        const el = document.getElementById('auth-status');
+        if (el) {
+          el.textContent = `스크립트 오류: ${event.message}`;
+        }
+      });
+
       const supabase =
         typeof createSupabaseClient === 'function' ? createSupabaseClient() : null;
       const authStatusEl = document.getElementById('auth-status');
@@ -401,6 +408,8 @@
         }
         setStatus('삭제 완료');
       }
+
+      setAuthStatus('스크립트 로드 완료. 이메일 입력 후 로그인 링크를 보내세요.');
 
       async function refreshUIBySession() {
         if (!supabase) {
