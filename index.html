@@ -1,72 +1,30 @@
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Centerpiece Archive</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <h1>Centerpiece Archive</h1>
-      <p>패션과 악세사리 컬렉션</p>
-    </header>
-
-    <main>
-      <section id="gallery" class="gallery" aria-label="큐레이션 아이템"></section>
-      <section class="main-contact-wrap" aria-label="Contact">
-        <div class="detail-contact">
-          <p class="contact-kicker">Contact</p>
-          <div class="contact-grid">
-            <p class="contact-item">Email<br /><a href="mailto:centerpice.archive@gmail.com">centerpice.archive@gmail.com</a></p>
-            <p class="contact-item">Instagram<br /><a href="https://instagram.com/centerpiece.archive" target="_blank" rel="noreferrer">@centerpiece.archive</a></p>
-            <p class="contact-item">Location<br />Seoul, KR</p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <script src="./data.js"></script>
-    <script>
-      const gallery = document.getElementById('gallery');
-
-      function createCard(item) {
-        const card = document.createElement('a');
-        card.href = `./item.html?id=${encodeURIComponent(item.id)}`;
-        card.className = 'card';
-        const coverSrc =
-          typeof item.coverImage === 'string'
-            ? item.coverImage
-            : item.coverImage.src;
-
-        card.innerHTML = `
-          <figure>
-            <img src="${coverSrc}" alt="${item.brand} ${item.name}" loading="lazy" />
-            <figcaption class="overlay">
-              <p class="brand">${item.brand}</p>
-              <p class="name">${item.name}</p>
-              <p class="era">${item.era}</p>
-            </figcaption>
-          </figure>
-        `;
-
-        return card;
-      }
-
-      async function init() {
-        const items = await getArchiveItems();
-        items.forEach((item) => {
-          gallery.appendChild(createCard(item));
-        });
-      }
-
-      init();
-    </script>
-  </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p2 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px AppleMyungjo; -webkit-text-stroke: #000000}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px AppleMyungjo; -webkit-text-stroke: #000000; min-height: 14.0px}
+    p.p4 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px AppleMyungjo; color: #0000e9; -webkit-text-stroke: #0000e9}
+    span.s1 {font-kerning: none}
+    span.s2 {font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
+    span.s3 {text-decoration: underline ; font-kerning: none; -webkit-text-stroke: 0px #0000e9}
+  </style>
+</head>
+<body>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px AppleMyungjo; -webkit-text-stroke: #000000"><span class="s1">Centerpiece Archive</span></h1>
+<p class="p2"><span class="s1">누군가의 테마를 이루는 것들</span></p>
+<p class="p3"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">Contact</span></p>
+<p class="p4"><span class="s2">Email<br>
+<a href="mailto:centerpice.archive@gmail.com"><span class="s3">centerpice.archive@gmail.com</span></a></span></p>
+<p class="p4"><span class="s2">Instagram<br>
+<a href="https://instagram.com/centerpiece.archive"><span class="s3">@centerpiece.archive</span></a></span></p>
+<p class="p2"><span class="s1">Location<br>
+Seoul, KR</span></p>
+</body>
 </html>
