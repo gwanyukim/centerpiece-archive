@@ -181,7 +181,7 @@ body {
 .item-page {
   max-width: 1260px;
   margin: 0 auto;
-  padding: 20px 24px 64px;
+  padding: 76px 24px 64px;
 }
 
 .back-link {
@@ -444,7 +444,7 @@ body {
   }
 
   .item-page {
-    padding: 20px 16px 40px;
+    padding: 64px 16px 40px;
   }
 
   .back-link {
@@ -639,19 +639,19 @@ body {
   border-color: #202020;
 }
 
-.detail-rows {
+.admin-page .detail-rows {
   display: grid;
   gap: 10px;
 }
 
-.detail-row {
+.admin-page .detail-row {
   border: 1px solid var(--line);
   padding: 10px;
   display: grid;
   gap: 8px;
 }
 
-.detail-row-grid {
+.admin-page .detail-row-grid {
   display: grid;
   gap: 8px;
 }
