@@ -282,6 +282,12 @@ body {
   column-gap: 26px;
 }
 
+.main-contact-wrap {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 40px 84px;
+}
+
 .contact-kicker {
   margin: 0 0 14px;
   color: var(--muted);
@@ -355,6 +361,10 @@ body {
     column-gap: 0;
   }
 
+  .main-contact-wrap {
+    padding: 0 24px 60px;
+  }
+
   .contact-kicker,
   .contact-grid {
     grid-column: auto;
@@ -378,6 +388,10 @@ body {
 
   .item-page {
     padding: 20px 16px 40px;
+  }
+
+  .main-contact-wrap {
+    padding: 0 16px 40px;
   }
 }
 
