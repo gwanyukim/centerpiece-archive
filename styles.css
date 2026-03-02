@@ -181,26 +181,24 @@ body {
 .item-page {
   max-width: 1260px;
   margin: 0 auto;
-  padding: 36px 24px 64px;
+  padding: 20px 24px 64px;
 }
 
 .back-link {
   display: inline-block;
-  margin-bottom: 0;
+  margin-bottom: 28px;
   color: var(--muted);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   font-size: 0.84rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  position: fixed;
-  top: 14px;
-  left: max(16px, calc((100vw - 1260px) / 2 + 24px));
-  z-index: 50;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(2px);
-  padding: 8px 10px;
-  border: 1px solid var(--line);
+  position: sticky;
+  top: 8px;
+  z-index: 12;
+  padding: 0;
+  background: transparent;
+  border: 0;
 }
 
 .detail-manage-link {
@@ -260,10 +258,7 @@ body {
 
 .detail-copy {
   position: static;
-}
-
-.detail-row-copy {
-  align-items: start;
+  margin-top: 6px;
 }
 
 .detail-intro {
@@ -386,7 +381,7 @@ body {
   }
 
   .back-link {
-    left: 16px;
+    top: 6px;
   }
 
   .detail-info {
@@ -453,10 +448,8 @@ body {
   }
 
   .back-link {
-    top: 10px;
-    left: 10px;
     font-size: 0.78rem;
-    padding: 6px 8px;
+    top: 4px;
   }
 
   .main-contact-wrap {
