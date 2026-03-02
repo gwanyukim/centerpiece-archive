@@ -32,6 +32,18 @@
     session: null
   };
 
+  function setEditorEnabled(enabled) {
+    if (!form) return;
+    const controls = form.querySelectorAll('input, textarea, button');
+    controls.forEach(function (el) {
+      if (enabled) {
+        el.removeAttribute('disabled');
+      } else if (!el.id || (el.id !== 'send-login-link' && el.id !== 'login-with-password' && el.id !== 'logout')) {
+        el.setAttribute('disabled', 'disabled');
+      }
+    });
+  }
+
   function setStatus(message) {
     if (statusEl) statusEl.textContent = message;
   }
@@ -268,6 +280,11 @@
       return;
     }
 
+    if (!state.session) {
+      setStatus('로그인 후 저장할 수 있습니다.');
+      return;
+    }
+
     const brand = fields.brand.value.trim();
     const name = fields.name.value.trim();
     const era = fields.era.value.trim();
@@ -325,6 +342,10 @@
 
   async function deleteItem(id) {
     if (!supabase) return;
+    if (!state.session) {
+      setStatus('로그인 후 삭제할 수 있습니다.');
+      return;
+    }
 
     const result = await supabase.from('archive_items').delete().eq('id', id);
     if (result.error) {
@@ -353,6 +374,7 @@
 
     editorPanel.style.display = loggedIn ? '' : 'none';
     savedPanel.style.display = loggedIn ? '' : 'none';
+    setEditorEnabled(loggedIn);
 
     if (!loggedIn) {
       setAuthStatus('로그인이 필요합니다.');
@@ -481,6 +503,9 @@
     });
   }
 
+  editorPanel.style.display = 'none';
+  savedPanel.style.display = 'none';
+  setEditorEnabled(false);
   setAuthStatus('스크립트 로드 완료. 이메일 입력 후 로그인 링크를 보내세요.');
   refreshUIBySession().catch(function (error) {
     setAuthStatus(`초기 로딩 실패: ${error.message || '오류'}`);
