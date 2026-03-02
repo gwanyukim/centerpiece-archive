@@ -25,7 +25,7 @@
         <p class="step-help">등록한 관리자 이메일로 로그인 링크를 받습니다.</p>
         <div class="admin-actions">
           <input id="login-email" type="email" placeholder="admin@email.com" />
-          <button id="send-login-link" class="admin-button admin-button-strong" type="button" onclick="document.getElementById('auth-status').textContent='버튼 클릭됨: 로그인 요청 준비 중...';">Send Login Link</button>
+          <button id="send-login-link" class="admin-button admin-button-strong" type="button" onclick="quickSendMagicLink(); return false;">Send Login Link</button>
           <button id="logout" class="admin-button" type="button">Logout</button>
         </div>
         <p id="auth-status" class="admin-status">초기 상태: 페이지 로딩 중...</p>
@@ -115,6 +115,49 @@
       }
     </script>
     <script src="./data.js"></script>
+    <script>
+      async function quickSendMagicLink() {
+        const status = document.getElementById('auth-status');
+        const emailInput = document.getElementById('login-email');
+        const email = (emailInput?.value || '').trim();
+
+        if (!email) {
+          status.textContent = '이메일을 입력하세요.';
+          return;
+        }
+
+        status.textContent = '로그인 링크 발송 중...';
+
+        try {
+          const response = await fetch(
+            'https://ivoieipceangpinnedpd.supabase.co/auth/v1/otp',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                apikey: 'sb_publishable_373hD2fL47vgruAWe4oL2A_MICSBB-B'
+              },
+              body: JSON.stringify({
+                email,
+                create_user: false,
+                email_redirect_to:
+                  'https://gwanyukim.github.io/centerpiece-archive/admin.html'
+              })
+            }
+          );
+
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            status.textContent = `로그인 링크 발송 실패: ${payload.msg || payload.error_description || response.status}`;
+            return;
+          }
+
+          status.textContent = '이메일로 로그인 링크를 보냈습니다. 메일함/스팸함을 확인하세요.';
+        } catch (error) {
+          status.textContent = `로그인 요청 오류: ${error.message || '네트워크 오류'}`;
+        }
+      }
+    </script>
     <script>
       window.addEventListener('error', (event) => {
         const el = document.getElementById('auth-status');
