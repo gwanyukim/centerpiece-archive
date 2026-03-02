@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Personal Curation Archive</h1>
+      <p>패션과 악세사리 컬렉션</p>
+      <a class="manage-link" href="./admin.html">Manage Archive</a>
+    </header>
+
+    <main>
+      <section id="gallery" class="gallery" aria-label="큐레이션 아이템"></section>
+    </main>
+
+    <script src="./data.js"></script>
+    <script>
+      const gallery = document.getElementById('gallery');
+
+      function createCard(item) {
+        const card = document.createElement('a');
+        card.href = `./item.html?id=${encodeURIComponent(item.id)}`;
+        card.className = 'card';
+        const coverSrc =
+          typeof item.coverImage === 'string'
+            ? item.coverImage
+            : item.coverImage.src;
+
+        card.innerHTML = `
+          <figure>
+            <img src="${coverSrc}" alt="${item.brand} ${item.name}" loading="lazy" />
+            <figcaption class="overlay">
+              <p class="brand">${item.brand}</p>
+              <p class="name">${item.name}</p>
+              <p class="era">${item.era}</p>
+            </figcaption>
+          </figure>
+        `;
+
+        return card;
+      }
+
+      async function init() {
+        const items = await getArchiveItems();
+        items.forEach((item) => {
+          gallery.appendChild(createCard(item));
+        });
+      }
+
+      init();
+    </script>
+  </body>
+</html>

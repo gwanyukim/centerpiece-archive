@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item Detail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main id="item-page" class="item-page"></main>
+
+    <script src="./data.js"></script>
+    <script>
+      const root = document.getElementById('item-page');
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+
+      async function init() {
+        const items = await getArchiveItems();
+        const item = items.find((entry) => entry.id === id);
+
+        if (!item) {
+          root.innerHTML = `
+          <section class="not-found">
+            <h1>아이템을 찾을 수 없습니다.</h1>
+            <a href="./index.html">메인으로 돌아가기</a>
+          </section>
+        `;
+          return;
+        }
+
+        const mediaItems = [item.coverImage, ...item.detailImages]
+          .map((entry) => {
+            if (typeof entry === 'string') {
+              return { src: entry, note: '' };
+            }
+            return {
+              src: entry.src,
+              note: entry.note || ''
+            };
+          });
+
+        const textByImage = mediaItems.map((media, idx) => ({
+          text: idx === 0 ? item.description : media.note || item.description
+        }));
+
+        const detailMedia = mediaItems
+          .map(
+            (media, idx) => `
+              <figure class="detail-media" data-index="${idx}">
+                <img src="${media.src}" alt="${item.brand} ${item.name} 상세 이미지 ${idx + 1}" loading="lazy" />
+              </figure>
+            `
+          )
+          .join('');
+
+        root.innerHTML = `
+          <a class="back-link" href="./index.html">← Gallery</a>
+          <a class="manage-link detail-manage-link" href="./admin.html">Manage Archive</a>
+          <article class="detail-layout">
+            <section class="detail-info">
+              <p class="detail-meta">${item.brand} · ${item.era}</p>
+              <h1>${item.name}</h1>
+              <div class="detail-copy">
+                <p id="detail-intro" class="detail-intro">${item.description}</p>
+              </div>
+            </section>
+            <section class="detail-images">${detailMedia}</section>
+          </article>
+          <section class="detail-contact" aria-label="Contact">
+            <p class="contact-kicker">Contact</p>
+            <div class="contact-grid">
+              <p class="contact-item">Email<br /><a href="mailto:archive@example.com">archive@example.com</a></p>
+              <p class="contact-item">Instagram<br /><a href="https://instagram.com/yourarchive" target="_blank" rel="noreferrer">@yourarchive</a></p>
+              <p class="contact-item">Location<br />Seoul, KR</p>
+            </div>
+          </section>
+        `;
+
+        const introEl = document.getElementById('detail-intro');
+        const copyEl = root.querySelector('.detail-copy');
+        const mediaNodes = Array.from(root.querySelectorAll('.detail-media'));
+        let activeIndex = 0;
+        let switchToken = 0;
+        const SWITCH_DELAY_MS = 240;
+
+        const setActiveCopy = (index, animate = true) => {
+          const content = textByImage[index] || textByImage[0];
+          if (!content) return;
+          if (index === activeIndex && animate) return;
+          activeIndex = index;
+
+          if (!animate) {
+            introEl.textContent = content.text;
+            return;
+          }
+
+          switchToken += 1;
+          const token = switchToken;
+          copyEl.classList.add('is-switching');
+
+          window.setTimeout(() => {
+            if (token !== switchToken) return;
+            introEl.textContent = content.text;
+            window.requestAnimationFrame(() => {
+              window.requestAnimationFrame(() => {
+                if (token !== switchToken) return;
+                copyEl.classList.remove('is-switching');
+              });
+            });
+          }, SWITCH_DELAY_MS);
+        };
+
+        setActiveCopy(0, false);
+
+        let ticking = false;
+        const updateActiveByViewport = () => {
+          const doc = document.documentElement;
+          const bottomBuffer = Math.min(window.innerHeight * 0.2, 220);
+          const nearBottom =
+            window.scrollY + window.innerHeight >= doc.scrollHeight - bottomBuffer;
+          if (nearBottom) {
+            setActiveCopy(mediaNodes.length - 1, true);
+            return;
+          }
+
+          const viewportCenter = window.innerHeight * 0.46;
+          let nextIndex = activeIndex;
+          let minDistance = Number.POSITIVE_INFINITY;
+          const distances = mediaNodes.map((node) => {
+            const rect = node.getBoundingClientRect();
+            const mediaCenter = rect.top + rect.height / 2;
+            return Math.abs(mediaCenter - viewportCenter);
+          });
+
+          distances.forEach((distance, idx) => {
+            if (distance < minDistance) {
+              minDistance = distance;
+              nextIndex = idx;
+            }
+          });
+
+          const activeDistance = distances[activeIndex] ?? Number.POSITIVE_INFINITY;
+          const SWITCH_DEADBAND = 26;
+          if (nextIndex !== activeIndex && minDistance + SWITCH_DEADBAND < activeDistance) {
+            setActiveCopy(nextIndex, true);
+          }
+        };
+
+        const onScroll = () => {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(() => {
+            updateActiveByViewport();
+            ticking = false;
+          });
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        updateActiveByViewport();
+
+        document.title = `${item.brand} ${item.name}`;
+      }
+
+      init();
+    </script>
+  </body>
+</html>
