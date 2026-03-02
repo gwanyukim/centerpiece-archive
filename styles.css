@@ -231,14 +231,14 @@ body {
   gap: 12px;
 }
 
-.detail-row {
+.detail-info .detail-row {
   display: grid;
   grid-template-columns: 62px 1fr;
   gap: 10px;
   align-items: baseline;
 }
 
-.detail-key {
+.detail-info .detail-key {
   margin: 0;
   color: var(--muted);
   font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
@@ -248,14 +248,14 @@ body {
   text-transform: uppercase;
 }
 
-.detail-value {
+.detail-info .detail-value {
   margin: 0;
   font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
   font-size: 0.96rem;
   font-weight: 500;
 }
 
-.detail-name {
+.detail-info .detail-name {
   margin: 0;
   font-size: clamp(1.8rem, 2.9vw, 3rem);
   font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
@@ -409,7 +409,7 @@ body {
     margin-bottom: 18px;
   }
 
-  .detail-row {
+  .detail-info .detail-row {
     grid-template-columns: 56px 1fr;
     gap: 8px;
   }
