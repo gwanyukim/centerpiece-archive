@@ -41,6 +41,26 @@ body {
   text-transform: uppercase;
 }
 
+.site-tagline {
+  margin: 10px 0 0;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: normal;
+  display: grid;
+  gap: 2px;
+}
+
+.site-tagline .en {
+  font-size: 0.84rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-tagline .ko {
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+}
+
 .manage-link {
   display: inline-block;
   margin-top: 14px;
@@ -170,6 +190,13 @@ body {
   font-size: 0.84rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  position: sticky;
+  top: 12px;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  padding: 8px 10px;
+  border: 1px solid var(--line);
 }
 
 .detail-manage-link {
